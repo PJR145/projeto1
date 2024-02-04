@@ -1,0 +1,89 @@
+menu = '''
+----------------Olá, seja bem-vindo ao Banco Diamond----------------------
+---------------------Selecione a opção desejada------------------
+[D] Depósito
+[S] Saque
+[E] Extrato
+[Q] Sair
+'''
+saldo = 0
+limite = 500
+extrato = " "
+numero_saques = 0
+saque_diario = 3
+
+while True:
+    opcao = input(menu)
+    if (opcao.upper()) == "D":
+        dinheiro = float(input("Digite o valor para depositar em sua conta: "))
+        print("Depósito realizado com sucesso!!")
+        if dinheiro > 0:
+            saldo += dinheiro
+            extrato += f"Depósito no valor de R$ {dinheiro:.2f}\n"
+
+        else:
+            print("Falha!! Tente novamente, valor informado incorreto.")
+
+    elif (opcao.upper()) == "S":
+        dinheiro = float(input("Digite o valor que deseja sacar: "))
+
+        excedeu_saldo = dinheiro > saldo
+        excedeu_limite = dinheiro > limite
+        excedeu_saque = numero_saques >= saque_diario
+
+        if excedeu_limite:
+            print(
+                "Operação inválida!! Valor é maior que o seu limite de saque! Limite de R$ 500,00 por operação")
+
+
+        elif excedeu_saldo:
+            print(
+                "Operação inválida!! Valor informado maior que seu saldo bancário!")
+            print (
+                f"Saldo atual: R${saldo:.2f}")
+
+
+        elif excedeu_saque:
+            print("Volte amanhã!! Você excedeu a quantidade de saque diário!")
+
+
+        elif dinheiro > 0:
+            saldo -= dinheiro
+            extrato += f"Saque no valor de R$ {dinheiro: .2f}\n"
+            numero_saques += 1
+
+        else:
+            print("Valor informado é inválido, tente novamente!")
+
+    elif (opcao.upper()) == "E":
+        print(f"""
+----------------------- Banco Diamond ---------------------
+
+-------------------- Extrato bancário ------------------
+
+
+-----Saldo: R$ {saldo: .2f}.-----
+-----Saques realizados: {numero_saques} .-----
+-----Transações possíveis: {saque_diario - numero_saques} saques diários-----
+
+
+---------------------------------------------------------
+----------------- Histórico de transações ---------------
+
+{extrato}
+
+---------------------------------------------------------
+""")
+
+    elif opcao.upper() == "Q":
+        print("""
+----------------------------------------------------------------------------
+------------------- Agradecemos pela sua confiança ----------------
+----------------------------------------------------------------------------
+-------------------------- Um ótimo dia --------------------------
+----------------------------------------------------------------------------
+
+""")
+        break
+    else:
+        print("Por favor selecione uma opção válida.")
